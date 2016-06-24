@@ -63,7 +63,7 @@ $node dockerNodeHello.js --performance
 
 ##Test containers
 
-On a browser hit http://localhost:2001 and http://localhost:2002. You will see the responses from both the dockerized node servers in logPool/output.log file  
+On a browser hit http://localhost:2001 and http://localhost:2002. You will see the response logs from both the dockerized node servers in logPool/output.log file.    
 
 ##Get help
 
