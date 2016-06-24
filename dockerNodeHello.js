@@ -81,12 +81,12 @@ else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
     helpText += "\t\t -h or --help: \t\t show help text \n";
     helpText += "\t\t -b or --build:\t\t builds the docker image \n";
     helpText += "\t\t -r or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
-    helpText += "\t\t \t Example: $node dockerNodeHello --run container1:port1 container2:port2 \n\n";
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello --run container1:port1 container2:port2 \n\n";
     helpText += "\t\t -c or --clear\t\t clears a list of containers defined in <parameters>\n";
-    helpText += "\t\t \t Example: $node dockerNodeHello --clear container1 container2 \n";
-    helpText += "\t\t \t Example: $node dockerNodeHello --clear all (kills and deletes all containers) \n\n";
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello --clear container1 container2 \n";
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello --clear all (kills and deletes all containers) \n\n";
     helpText += "\t\t -s or --status\t\t display containers status \n";
-    helpText += "\t\t -p or --performance\t\t display containers performance (resources consumtion) \n\n";    
+    helpText += "\t\t -p or --performance\t display containers performance (resources consumtion) \n\n";    
 
     console.log(helpText);
 }
