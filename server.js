@@ -14,10 +14,10 @@ function getDateTime() {
     var hour = date.getHours();
     hour = (hour < 10 ? "0" : "") + hour;
 
-    var min  = date.getMinutes();
+    var min = date.getMinutes();
     min = (min < 10 ? "0" : "") + min;
 
-    var sec  = date.getSeconds();
+    var sec = date.getSeconds();
     sec = (sec < 10 ? "0" : "") + sec;
 
     var year = date.getFullYear();
@@ -25,7 +25,7 @@ function getDateTime() {
     var month = date.getMonth() + 1;
     month = (month < 10 ? "0" : "") + month;
 
-    var day  = date.getDate();
+    var day = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
     return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
@@ -34,12 +34,12 @@ function getDateTime() {
 
 // App
 const app = express();
-app.get('/', function (req, res) {
-  res.send('Hello world\n');
-  var msg = getDateTime() + ': Sending response ..';
-  var command = "echo '"+msg+"' >>/var/log/server_log/output.log";
-	console.log("Executing command:", command);
-     exec(command);
+app.get('/', function(req, res) {
+    res.send('Hello world\n');
+    var msg = getDateTime() + ': Sending response ..';
+    var command = "echo '" + msg + "' >>/var/log/server_log/output.log";
+    console.log("Executing command:", command);
+    exec(command);
 });
 
 app.listen(PORT);
