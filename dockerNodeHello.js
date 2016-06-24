@@ -32,12 +32,15 @@ else if ((process.argv[2] === '-r') || (process.argv[2] === '--run')) {
         console.log("USAGE: $node dockerNodeHello.js -r container1:port1 container2:port2 ... etc");
         process.exit(3);
     }
-
+    //find the home directory
+    var homeArr = process.argv[1].split("/dockerNodeHello.js");
+    var homeFolder = homeArr[0];
+   
     for (var i = 3; i < process.argv.length; i++) {
         var argmnt = process.argv[i].split(":");
         var container_name = argmnt[0];
         var container_port = argmnt[1];
-        var command = "docker run --name " + container_name + " -v /home/mizo/Desktop/dockerNodeHello/logPool:/var/log/server_log" + " -p " + container_port + ":8080 -d mizo/node-web-app";
+        var command = "docker run --name " + container_name + " -v "+homeFolder+"/logPool:/var/log/server_log" + " -p " + container_port + ":8080 -d mizo/node-web-app";
         console.log("Executing command:", command);
         exec(command, puts);
     }
@@ -85,7 +88,7 @@ else if ((process.argv[2] === '-p') || (process.argv[2] === '--performance')) {
 }
 
 //get help
-else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
+else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {		    
     var helpText = "\n dockerNodeHello: Simple node application that builds and manages several docker hello world containers. \n \n USAGE: \n \n $node dockerNodeHello.js <mode> <parameters> \n \n mode options: \n \n";
     helpText += "\t\t -h or --help: \t\t show help text \n";
     helpText += "\t\t -b or --build:\t\t builds the docker image \n";
