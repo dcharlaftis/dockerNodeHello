@@ -5,5 +5,32 @@ var child;
 // or more concisely
 var sys = require('sys')
 var exec = require('child_process').exec;
+
 function puts(error, stdout, stderr) { sys.puts(stdout) }
-exec("pwd", puts);
+
+//check for build option
+//usage: $node dockerNodeHello.js -b
+if (process.argv[2] === '-b') {
+    var command = "docker build -t mizo/node-web-app .";
+    console.log("Executing command:", command);
+    exec(command, puts);
+
+}
+//check container names and ports
+//usage: $node dockerNodeHello.js -r container1:port1 container2:port2 ... etc 
+else if (process.argv[2] === '-r') {
+    if (process.argv[3] == null) {
+        console.log("Please specify valid container name and ports.");
+        console.log("USAGE: $node dockerNodeHello.js -r container1:port1 container2:port2 ... etc");
+        process.exit(3);
+    }
+
+    for (var i = 3; i < process.argv.length; i++) {
+        var argmnt = process.argv[i].split(":");
+        var container_name = argmnt[0];
+        var container_port = argmnt[1];
+        var command = "docker run --name " + container_name + " -p " + container_port + ":8080 -d mizo/node-web-app";
+        console.log("Executing command:", command);
+        exec(command, puts);
+    }
+}
