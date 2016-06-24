@@ -1,3 +1,12 @@
+
+/*
+  The main tool for manipulating docker containers. 
+  Each container is a web server responding "Hello world!"
+
+  For help type:
+  $node dockerNodeHello.js -h (or --help)
+*/
+
 var sys = require('sys')
 var exec = require('child_process').exec;
 
