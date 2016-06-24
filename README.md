@@ -11,7 +11,7 @@ Simple node application that builds & manages several docker hello world contain
 2. Install docker  
     https://docs.docker.com/engine/installation/linux/ubuntulinux/  
 
-3. Install git (Ubuntu) 
+3. Install git (Ubuntu)  
     $sudo apt-get update  
     $sudo apt-get install git  
 
