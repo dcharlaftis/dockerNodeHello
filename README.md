@@ -19,9 +19,8 @@ $node dockerNodeHello.js -b or $node dockerNodeHello.js --build
 
 ## Run containers
 
-$node dockerNodeHello.js -r cont1:2001 cont2:2002 .... etc
-or
-$node dockerNodeHello.js --run cont1:2001 cont2:2002 .... etc
+1a. $node dockerNodeHello.js -r cont1:2001 cont2:2002 .... etc or
+1b. $node dockerNodeHello.js --run cont1:2001 cont2:2002 .... etc
 
 Runs container with name cont1 on external port 2001 and container with name cont2 on external port 2002.
 
