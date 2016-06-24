@@ -66,6 +66,7 @@ else if ((process.argv[2] === '-s') || (process.argv[2] === '--status')) {
     console.log("Executing command:", command);
     exec(command, puts);
 }
+
 //check containers performance 
 //usage: $node dockerNodeHello.js -p
 else if ((process.argv[2] === '-p') || (process.argv[2] === '--performance')) {
