@@ -41,12 +41,12 @@ else if ((process.argv[2] === '-c') || (process.argv[2] === '--clear')) {
         console.log("Please specify valid container name(s).");
         console.log("USAGE: $node dockerNodeHello.js -c container1 container2 ... etc");
         process.exit(3);
-    } 
+    }
     //delete all containers
     else if (process.argv[3] == "all") {
-    	var command = " docker kill $(docker ps -a -q) && docker rm $(docker ps -a -q)";
-            console.log("Executing command:", command);
-            exec(command, puts);
+        var command = " docker kill $(docker ps -a -q) && docker rm $(docker ps -a -q)";
+        console.log("Executing command:", command);
+        exec(command, puts);
 
     } else {
         for (var i = 3; i < process.argv.length; i++) {
@@ -73,4 +73,20 @@ else if ((process.argv[2] === '-p') || (process.argv[2] === '--performance')) {
     var command = "docker stats";
     console.log("Executing command:", command);
     exec(command);
+}
+
+//get help
+else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
+    var helpText = "\n dockerNodeHello: Simple node application that builds and manages several docker hello world containers. \n \n USAGE: \n \n $node dockerNodeHello <mode> <parameters> \n \n mode options: \n \n";
+    helpText += "\t\t -h or --help: \t\t show help text \n";
+    helpText += "\t\t -b or --build:\t\t builds the docker image \n";
+    helpText += "\t\t -r or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
+    helpText += "\t\t \t Example: $node dockerNodeHello --run container1:port1 container2:port2 \n\n";
+    helpText += "\t\t -c or --clear\t\t clears a list of containers defined in <parameters>\n";
+    helpText += "\t\t \t Example: $node dockerNodeHello --clear container1 container2 \n";
+    helpText += "\t\t \t Example: $node dockerNodeHello --clear all (kills and deletes all containers) \n\n";
+    helpText += "\t\t -s or --status\t\t display containers status \n";
+    helpText += "\t\t -p or --performance\t\t display containers performance (resources consumtion) \n\n";    
+
+    console.log(helpText);
 }
