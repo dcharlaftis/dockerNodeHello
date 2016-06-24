@@ -70,9 +70,9 @@ else if ((process.argv[2] === '-s') || (process.argv[2] === '--status')) {
 //check containers performance 
 //usage: $node dockerNodeHello.js -p
 else if ((process.argv[2] === '-p') || (process.argv[2] === '--performance')) {
-    var command = "docker stats";
+    var command = "docker stats --no-stream";
     console.log("Executing command:", command);
-    exec(command);
+    exec(command, puts);
 }
 
 //get help
