@@ -7,11 +7,7 @@
   $node dockerNodeHello.js -h (or --help)
 */
 
-var sys = require('sys')
-var exec = require('child_process').exec;
-
-// or more concisely
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
 
 function puts(error, stdout, stderr) { sys.puts(stdout) }
@@ -24,6 +20,23 @@ if ((process.argv[2] === '-b') || (process.argv[2] === '--build')) {
     exec(command, puts);
 
 }
+
+//get the available docker images using the docker remote API
+if ((process.argv[2] === '-i') || (process.argv[2] === '--images')) {
+    var command = "curl -X GET http://localhost:4243/images/json";
+    console.log("Executing command:", command);
+    exec(command, puts);
+
+}
+
+//get the available docker containers using the docker remote API
+if ((process.argv[2] === '-co') || (process.argv[2] === '--containers')) {
+    var command = "curl -X GET http://localhost:4243/containers/json";
+    console.log("Executing command:", command);
+    exec(command, puts);
+
+}
+
 //check container names and ports
 //usage: $node dockerNodeHello.js -r container1:port1 container2:port2 ... etc 
 else if ((process.argv[2] === '-r') || (process.argv[2] === '--run')) {
@@ -90,15 +103,17 @@ else if ((process.argv[2] === '-p') || (process.argv[2] === '--performance')) {
 //get help
 else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {		    
     var helpText = "\n dockerNodeHello: Simple node application that builds and manages several docker hello world containers. \n \n USAGE: \n \n $node dockerNodeHello.js <mode> <parameters> \n \n mode options: \n \n";
-    helpText += "\t\t -h or --help: \t\t show help text \n";
-    helpText += "\t\t -b or --build:\t\t builds the docker image \n";
-    helpText += "\t\t -r or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
+    helpText += "\t\t -h  or --help: \t show help text \n";
+    helpText += "\t\t -b  or --build:\t builds the docker image \n";
+    helpText += "\t\t -i  or --images:\t display available docker images (json) \n";
+    helpText += "\t\t -co or --containers:\t display available docker containers (json) \n";
+    helpText += "\t\t -r  or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --run container1:port1 container2:port2 \n\n";
-    helpText += "\t\t -c or --clear\t\t clears a list of containers defined in <parameters>\n";
+    helpText += "\t\t -c  or --clear\t\t clears a list of containers defined in <parameters>\n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --clear container1 container2 \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --clear all (kills and deletes all containers) \n\n";
-    helpText += "\t\t -s or --status\t\t display containers status \n";
-    helpText += "\t\t -p or --performance\t display containers performance (resources consumtion) \n\n";    
+    helpText += "\t\t -s  or --status\t display containers status \n";
+    helpText += "\t\t -p  or --performance\t display containers performance (resources consumtion) \n\n";    
 
     console.log(helpText);
 }
