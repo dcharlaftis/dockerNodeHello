@@ -27,6 +27,7 @@ NOTE 2: This application is configured to run locally.
        DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'  
   
        The last command means that the host machine will listen to port 4243 for incoming docker command requests  
+      
     c. sudo service docker restart  
 
  6. Test docker API.  
