@@ -30,6 +30,7 @@ NOTE 2: This application is configured to run locally.
       
     c. sudo service docker restart  
 
+     
  6. Test docker API.  
     $curl http://localhost:4243/images/json will respond a json containing the docker images info  
 
