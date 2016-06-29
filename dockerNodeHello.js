@@ -240,7 +240,8 @@ else if ((process.argv[2] === '-p') || (process.argv[2] === '--performance')) {
 
 //get help
 else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {		    
-    var helpText = "\n dockerNodeHello: Simple node application that builds and manages several docker hello world containers. \n \n USAGE: \n \n $node dockerNodeHello.js <mode> <parameters> \n \n mode options: \n \n";
+    var helpText = "\n dockerNodeHello: Simple node application that builds and manages several docker hello world containers. \n \n USAGE: \n \n $node dockerNodeHello.js <mode> <parameters> \n \n \t\t Mode Options: \t\t Parameters Description: \n";
+     helpText += "\t\t =============================================== \n\n";
     helpText += "\t\t -h  or --help: \t show help text \n";
     helpText += "\t\t -b  or --build:\t builds the docker image \n";
     helpText += "\t\t -i  or --images:\t display available docker images (using remote API) \n";
