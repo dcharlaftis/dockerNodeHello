@@ -68,7 +68,7 @@ $node dockerNodeHello.js -co
 or  
 $node dockerNodeHello.js --containers   
 
-## 6. Clear containers
+## 6a. Clear containers
 
 Clears a list of available containers.  
 
@@ -78,6 +78,17 @@ $node dockerNodeHello.js --clear containerName1  containerName2
 
 NOTE: To clear all the containers run:   
 $node dockerNodeHello.js --clear all  
+
+## 6b. Clear containers (using remote API)
+
+Clears a list of available containers.  
+
+$node dockerNodeHello.js -rm containerName1  containerName2   
+or  
+$node dockerNodeHello.js --remove containerName1  containerName2  
+
+NOTE: To clear all the containers run:   
+$node dockerNodeHello.js --remove all  
 
 ## 7. Display containers status
 
@@ -97,7 +108,7 @@ $node dockerNodeHello.js --performance
 
 ## 9. Inspect a specific container by its id (from remote API)
 
-Use a containers id as a parameter and inspect all its info in detail.  
+Use a containers id (or its name) as a parameter and inspect all its info in detail.  
 
 $node dockerNodeHello.js -in containerID  
 or  

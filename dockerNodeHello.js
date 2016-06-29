@@ -86,6 +86,31 @@ else if ((process.argv[2] === '-c') || (process.argv[2] === '--clear')) {
 
 }
 
+//kill and remove containers using remote API
+else if ((process.argv[2] === '-rm') || (process.argv[2] === '--remove')) {
+    if (process.argv[3] == null) {
+        console.log("Please specify valid container name(s).");
+        console.log("USAGE: $node dockerNodeHello.js -rm <container1> <container2> ... etc");
+        process.exit(3);
+    }
+    //delete all containers
+    else if (process.argv[3] == "all") {
+        var command = " docker kill $(docker ps -a -q) && docker rm $(docker ps -a -q)";
+        console.log("Executing command:", command);
+        exec(command, puts);
+
+    } else {
+        for (var i = 3; i < process.argv.length; i++) {
+            var container_name = process.argv[i];
+            var command = "curl -X POST http://localhost:4243/containers/" + container_name + "/kill ";
+            command+=" && curl -X DELETE http://localhost:4243/containers/" + container_name;
+            console.log("Executing command:", command);
+            exec(command, puts);
+        }
+    }
+
+}
+
 //inspect a specific container by its id. 
 //You can find the containr's running $node dockerNodeHello.js -s 
 //usage: $node dockerNodeHello.js -in containerID or $node dockerNodeHello.js --inspect containerID 
@@ -123,9 +148,11 @@ else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
     var helpText = "\n dockerNodeHello: Simple node application that builds and manages several docker hello world containers. \n \n USAGE: \n \n $node dockerNodeHello.js <mode> <parameters> \n \n mode options: \n \n";
     helpText += "\t\t -h  or --help: \t show help text \n";
     helpText += "\t\t -b  or --build:\t builds the docker image \n";
-    helpText += "\t\t -i  or --images:\t display available docker images (json) \n";
-    helpText += "\t\t -co or --containers:\t display available docker containers (json) \n";
-    helpText += "\t\t -in or --inspect:\t display a container's info by its id (json) \n";
+    helpText += "\t\t -i  or --images:\t display available docker images (using remote API) \n";
+    helpText += "\t\t -co or --containers:\t display available docker containers (using remote API) \n";
+    helpText += "\t\t -rm or --remove:\t removes a list of docker containers (using remote API) \n";
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --remove container1 container2 \n\n";
+    helpText += "\t\t -in or --inspect:\t display a container's info by its id or its name (using remote API) \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --inspect c455ac2e4fc3 \n\n";
     helpText += "\t\t -r  or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --run container1:port1 container2:port2 \n\n";
