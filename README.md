@@ -1,7 +1,9 @@
 #dockerNodeHello
 
 Simple node application that builds & manages several docker hello world containers.  
-The tool makes use both docker core and the docker remote API. 
+The tool makes use both docker core and the docker remote API.   
+
+NOTE: Docker version used for this example is 1.11.2 and docker API version is 1.23  
 
 
 ##Prerequisites
@@ -28,8 +30,6 @@ The tool makes use both docker core and the docker remote API.
 
  6. Test docker API.  
     $curl http://localhost:4243/images/json will respond a json containing the docker images info  
-
-NOTE: Docker version used for this example is 1.11.2 and docker API version is 1.23  
 
     
 ## 1. Clone repository
