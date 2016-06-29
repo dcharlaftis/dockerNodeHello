@@ -39,7 +39,7 @@ if ((process.argv[2] === '-co') || (process.argv[2] === '--containers')) {
 
 }
 
-//check container names and ports
+//run containers - check container names and ports
 //usage: $node dockerNodeHello.js -r container1:port1 container2:port2 ... etc 
 else if ((process.argv[2] === '-r') || (process.argv[2] === '--run')) {
     if (process.argv[3] == null) {
@@ -59,6 +59,84 @@ else if ((process.argv[2] === '-r') || (process.argv[2] === '--run')) {
         console.log("Executing command:", command);
         exec(command, puts);
     }
+}
+
+//create a container using the remote API
+//usage: $node dockerNodeHello.js --create containerName:port  
+else if  (process.argv[2] === '--create') {
+    if (process.argv[3] == null) {
+        console.log("Please specify valid container name and port.");
+        console.log("USAGE: $node dockerNodeHello.js --create <containerName>:<port> ");
+        process.exit(3);
+    }
+
+    var argmnt = process.argv[3].split(":");
+    var container_name = argmnt[0];
+    var container_port = argmnt[1];
+    var command = "curl -X POST -H 'Content-Type: application/json' http://localhost:4243/containers/create -d   '";
+    command += '{ "Hostname":"'+ container_name+'",\
+        "Domainname": "",\
+        "User": "",\
+        "AttachStdin": false,\
+        "AttachStdout": true,\
+        "AttachStderr": true,\
+        "Tty": false,\
+        "OpenStdin": false,\
+        "StdinOnce": false,\
+        "Image": "mizo/node-web-app",\
+        "Volumes": {\
+            "/volumes/data": {}\
+        },\
+        "ExposedPorts": {\
+            "8080/tcp": {}\
+        },\
+        "StopSignal": "SIGTERM",\
+        "HostConfig": {\
+            "Binds": ["/logPool:/var/log/server_log"],\
+            "PortBindings": {\
+                "8080/tcp": [{\
+                    "HostPort":"'+ container_port+'"\
+                }]\
+            }\
+        }\
+    }';
+    command+="'";
+
+    console.log("Executing command:", command);
+    exec(command, puts);
+
+}
+
+//start a container using the remote API
+//usage: $node dockerNodeHello.js --start containerID (you can see the id from the container's creation step)  
+else if  (process.argv[2] === '--start') {
+    if (process.argv[3] == null) {
+        console.log("Please specify valid container id.");
+        console.log("USAGE: $node dockerNodeHello.js --start <containerID>");
+        process.exit(3);
+    }
+    
+    var container_id = process.argv[3];
+    var command = "curl -X POST http://localhost:4243/containers/" + container_id + "/start";
+    console.log("Executing command:", command);
+    exec(command, puts);
+
+}
+
+//stop a container using the remote API
+//usage: $node dockerNodeHello.js --stop containerID (you can see the id from the container's creation step)  
+else if  (process.argv[2] === '--stop') {
+    if (process.argv[3] == null) {
+        console.log("Please specify valid container id.");
+        console.log("USAGE: $node dockerNodeHello.js --stop <containerID>");
+        process.exit(3);
+    }
+    
+    var container_id = process.argv[3];
+    var command = "curl -X POST http://localhost:4243/containers/" + container_id + "/stop";
+    console.log("Executing command:", command);
+    exec(command, puts);
+
 }
 
 //clear containers 
@@ -162,7 +240,7 @@ else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
     helpText += "\t\t -h  or --help: \t show help text \n";
     helpText += "\t\t -b  or --build:\t builds the docker image \n";
     helpText += "\t\t -i  or --images:\t display available docker images (using remote API) \n";
-    helpText += "\t\t -co or --containers:\t display available docker containers (using remote API) \n";
+    helpText += "\t\t -co or --containers:\t display available docker containers (using remote API) \n\n";
     helpText += "\t\t -rm or --remove:\t removes a list of docker containers (using remote API) \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --remove container1 container2 \n\n";
     helpText += "\t\t -in or --inspect:\t display a container's info by its id or its name (using remote API) \n";
@@ -175,7 +253,13 @@ else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --clear container1 container2 \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --clear all (kills and deletes all containers) \n\n";
     helpText += "\t\t -s  or --status\t display containers status \n";
-    helpText += "\t\t -p  or --performance\t display containers performance (resources consumtion) \n\n";    
+    helpText += "\t\t -p  or --performance\t display containers performance (resources consumtion) \n\n";  
+    helpText += "\t\t --create\t\t creates a container (using remote API) \n";  
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --create containerName:port \n\n"; 
+    helpText += "\t\t --start\t\t starts a container by its id (using remote API) \n";  
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --start containerID \n\n"; 
+    helpText += "\t\t --stop\t\t\t stop a container by its id (using remote API) \n";  
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --stop containerID \n\n"; 
 
     console.log(helpText);
 }

@@ -57,7 +57,7 @@ or
 $node dockerNodeHello.js --images   
 
 
-## 4. Run containers
+## 4a. Run containers
 
 The following command runs multiple containers from the image built before.  
 
@@ -68,6 +68,26 @@ $node dockerNodeHello.js --run cont1:2001 cont2:2002 .... etc
 Runs container with name cont1 on external port 2001 and container with name cont2 on external port 2002.  
 
 The mapped log pool file (for all the containers) is logPool/output.log  
+
+
+## 4b. Run containers (using the remote API)
+
+### i) create container
+
+The following command uses the remote API to post container info in json format.  
+$node dockerNodeHello.js --create containerName:port  
+
+After a successfull creation, API responds with the conteiner ID.   
+
+### ii) start container
+
+Using the ID from the previous step, start the container.  
+$node dockerNodeHello.js --start containerID
+
+### ii) stop container
+
+Using the ID from the previous step, stop the container.  
+$node dockerNodeHello.js --stop containerID
 
 
 ## 5a. Display containers status
