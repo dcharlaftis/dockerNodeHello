@@ -70,6 +70,10 @@ else if  (process.argv[2] === '--create') {
         process.exit(3);
     }
 
+    //find the home directory
+    var homeArr = process.argv[1].split("/dockerNodeHello.js");
+    var homeFolder = homeArr[0];
+
     var argmnt = process.argv[3].split(":");
     var container_name = argmnt[0];
     var container_port = argmnt[1];
@@ -92,7 +96,7 @@ else if  (process.argv[2] === '--create') {
         },\
         "StopSignal": "SIGTERM",\
         "HostConfig": {\
-            "Binds": ["/logPool:/var/log/server_log"],\
+            "Binds": ["'+homeFolder +'/logPool:/var/log/server_log"],\
             "PortBindings": {\
                 "8080/tcp": [{\
                     "HostPort":"'+ container_port+'"\
