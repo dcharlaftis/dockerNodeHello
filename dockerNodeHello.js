@@ -111,6 +111,19 @@ else if ((process.argv[2] === '-rm') || (process.argv[2] === '--remove')) {
 
 }
 
+//display containers  resource usage statistics using remote API
+//usage: $node dockerNodeHello.js -st containerName
+else if ((process.argv[2] === '-st') || (process.argv[2] === '--statistics')) {
+    if (process.argv[3] == null) {
+        console.log("Please specify valid container name.");
+        console.log("USAGE: $node dockerNodeHello.js -st containerName");
+        process.exit(3);
+    }
+    var container = process.argv[3];
+    var command = " curl -X GET http://localhost:4243/containers/"+container+"/stats?stream=0";
+    exec(command, puts);
+}
+
 //inspect a specific container by its id. 
 //You can find the containr's running $node dockerNodeHello.js -s 
 //usage: $node dockerNodeHello.js -in containerID or $node dockerNodeHello.js --inspect containerID 
@@ -154,6 +167,8 @@ else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --remove container1 container2 \n\n";
     helpText += "\t\t -in or --inspect:\t display a container's info by its id or its name (using remote API) \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --inspect c455ac2e4fc3 \n\n";
+    helpText += "\t\t -st or --statistics:\t display a container's resource consumption by its id or its name (using remote API) \n";
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --statistics containerName \n\n";
     helpText += "\t\t -r  or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --run container1:port1 container2:port2 \n\n";
     helpText += "\t\t -c  or --clear\t\t clears a list of containers defined in <parameters>\n";
