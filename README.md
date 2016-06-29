@@ -3,7 +3,8 @@
 Simple node application that builds & manages several docker hello world containers.  
 The tool makes use both docker core and the docker remote API.   
 
-NOTE: Docker version used for this example is 1.11.2 and docker API version is 1.23  
+NOTE 1: Docker version used for this example is 1.11.2 and docker API version is 1.23  
+NOTE 2: This application is configured to run locally.  
 
 
 ##Prerequisites
