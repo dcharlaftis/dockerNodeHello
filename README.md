@@ -24,7 +24,7 @@ The tool makes use both docker core and the docker remote API.
        DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'  
   
    The last command means that the host machine will listen to port 4243 for incoming docker command requests  
-   ie. $curl http://localhost:4243/images/json will respond a json containing thedocker images info
+   ie. $curl http://localhost:4243/images/json will respond a json containing the docker images info
 
     
 ## 1. Clone repository
@@ -95,12 +95,20 @@ $node dockerNodeHello.js -p
 or  
 $node dockerNodeHello.js --performance  
 
-## 9. Test containers
+## 9. Inspect a specific container by its id (from remote API)
+
+Use a containers id as a parameter and inspect all its info in detail.  
+
+$node dockerNodeHello.js -in containerID  
+or  
+$node dockerNodeHello.js --inspect containerID  
+
+## 10. Test containers
 
 On a browser hit http://localhost:2001 and http://localhost:2002.  
 You will see the response logs from both the dockerized node servers in logPool/output.log file.    
 
-## 10. Get help
+## 11. Get help
 
 Print help text from command line.  
 

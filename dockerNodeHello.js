@@ -22,6 +22,7 @@ if ((process.argv[2] === '-b') || (process.argv[2] === '--build')) {
 }
 
 //get the available docker images using the docker remote API
+//usage: $node dockerNodeHello.js -i or  $node dockerNodeHello.js --images
 if ((process.argv[2] === '-i') || (process.argv[2] === '--images')) {
     var command = "curl -X GET http://localhost:4243/images/json";
     console.log("Executing command:", command);
@@ -30,6 +31,7 @@ if ((process.argv[2] === '-i') || (process.argv[2] === '--images')) {
 }
 
 //get the available docker containers using the docker remote API
+//usage: $node dockerNodeHello.js -co or  $node dockerNodeHello.js --containers
 if ((process.argv[2] === '-co') || (process.argv[2] === '--containers')) {
     var command = "curl -X GET http://localhost:4243/containers/json";
     console.log("Executing command:", command);
@@ -42,7 +44,7 @@ if ((process.argv[2] === '-co') || (process.argv[2] === '--containers')) {
 else if ((process.argv[2] === '-r') || (process.argv[2] === '--run')) {
     if (process.argv[3] == null) {
         console.log("Please specify valid container name and ports.");
-        console.log("USAGE: $node dockerNodeHello.js -r container1:port1 container2:port2 ... etc");
+        console.log("USAGE: $node dockerNodeHello.js -r <container1>:<port1> <container2>:<port2> ... etc");
         process.exit(3);
     }
     //find the home directory
@@ -64,7 +66,7 @@ else if ((process.argv[2] === '-r') || (process.argv[2] === '--run')) {
 else if ((process.argv[2] === '-c') || (process.argv[2] === '--clear')) {
     if (process.argv[3] == null) {
         console.log("Please specify valid container name(s).");
-        console.log("USAGE: $node dockerNodeHello.js -c container1 container2 ... etc");
+        console.log("USAGE: $node dockerNodeHello.js -c <container1> <container2> ... etc");
         process.exit(3);
     }
     //delete all containers
@@ -82,6 +84,22 @@ else if ((process.argv[2] === '-c') || (process.argv[2] === '--clear')) {
         }
     }
 
+}
+
+//inspect a specific container by its id. 
+//You can find the containr's running $node dockerNodeHello.js -s 
+//usage: $node dockerNodeHello.js -in containerID or $node dockerNodeHello.js --inspect containerID 
+else if ((process.argv[2] === '-in') || (process.argv[2] === '--inspect')) {
+     if (process.argv[3] == null){
+        console.log("Please specify valid container id for inspection.");
+        console.log("USAGE: $node dockerNodeHello.js -in <containerID> or $node dockerNodeHello.js --inspect <containerID>");
+        process.exit(3);
+     }
+
+    var container_id = process.argv[3];
+    var command = "curl -X GET http://localhost:4243/containers/" + container_id +"/json";
+    console.log("Executing command:", command);
+    exec(command, puts);
 }
 
 //check containers status 
@@ -107,6 +125,8 @@ else if ((process.argv[2] === '-h') || (process.argv[2] === '--help')) {
     helpText += "\t\t -b  or --build:\t builds the docker image \n";
     helpText += "\t\t -i  or --images:\t display available docker images (json) \n";
     helpText += "\t\t -co or --containers:\t display available docker containers (json) \n";
+    helpText += "\t\t -in or --inspect:\t display a container's info by its id (json) \n";
+    helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --inspect c455ac2e4fc3 \n\n";
     helpText += "\t\t -r  or --run: \t\t runs a list of containers in specified ports defined in <parameters> \n";
     helpText += "\t\t \t\t\t Example: $node dockerNodeHello.js --run container1:port1 container2:port2 \n\n";
     helpText += "\t\t -c  or --clear\t\t clears a list of containers defined in <parameters>\n";
